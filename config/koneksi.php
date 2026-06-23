@@ -7,7 +7,7 @@ class Koneksi {
     private $host = "localhost";
     private $username = "root";
     private $password = "";
-    private $database = "pbo_uas_php";
+    private $database = "db_uas_pbo_trpl1b_irma siti wahyuni";
     private $koneksi = null;
 
     // ========== KONSTRUKTOR ==========
@@ -45,7 +45,6 @@ class Koneksi {
                 throw new Exception("Prepare statement gagal: " . $this->koneksi->error);
             }
 
-            // Binding parameter jika ada
             if (!empty($params)) {
                 $types = str_repeat('s', count($params));
                 $stmt->bind_param($types, ...$params);
@@ -62,106 +61,19 @@ class Koneksi {
         }
     }
 
-    // ========== METHOD INSERT ==========
-    public function insert($sql, $params = []) {
-        try {
-            $stmt = $this->koneksi->prepare($sql);
-            
-            if (!$stmt) {
-                throw new Exception("Prepare statement gagal: " . $this->koneksi->error);
-            }
-
-            if (!empty($params)) {
-                $types = str_repeat('s', count($params));
-                $stmt->bind_param($types, ...$params);
-            }
-
-            $stmt->execute();
-            $insertId = $stmt->insert_id;
-            $stmt->close();
-
-            return $insertId;
-
-        } catch (Exception $e) {
-            die("❌ Insert Error: " . $e->getMessage());
-        }
-    }
-
-    // ========== METHOD UPDATE ==========
-    public function update($sql, $params = []) {
-        try {
-            $stmt = $this->koneksi->prepare($sql);
-            
-            if (!$stmt) {
-                throw new Exception("Prepare statement gagal: " . $this->koneksi->error);
-            }
-
-            if (!empty($params)) {
-                $types = str_repeat('s', count($params));
-                $stmt->bind_param($types, ...$params);
-            }
-
-            $stmt->execute();
-            $affectedRows = $stmt->affected_rows;
-            $stmt->close();
-
-            return $affectedRows;
-
-        } catch (Exception $e) {
-            die("❌ Update Error: " . $e->getMessage());
-        }
-    }
-
-    // ========== METHOD DELETE ==========
-    public function delete($sql, $params = []) {
-        try {
-            $stmt = $this->koneksi->prepare($sql);
-            
-            if (!$stmt) {
-                throw new Exception("Prepare statement gagal: " . $this->koneksi->error);
-            }
-
-            if (!empty($params)) {
-                $types = str_repeat('s', count($params));
-                $stmt->bind_param($types, ...$params);
-            }
-
-            $stmt->execute();
-            $affectedRows = $stmt->affected_rows;
-            $stmt->close();
-
-            return $affectedRows;
-
-        } catch (Exception $e) {
-            die("❌ Delete Error: " . $e->getMessage());
-        }
-    }
-
     // ========== METHOD TEST KONEKSI ==========
     public function testKoneksi() {
         if ($this->koneksi) {
-            echo "✅ Koneksi berhasil!<br>";
-            echo "📊 Database: " . $this->database . "<br>";
-            echo "🔄 Host: " . $this->host . "<br>";
             return true;
-        } else {
-            echo "❌ Koneksi gagal!<br>";
-            return false;
         }
+        return false;
     }
 
     // ========== METHOD MENUTUP KONEKSI ==========
     public function tutupKoneksi() {
         if ($this->koneksi) {
             $this->koneksi->close();
-            echo "🔒 Koneksi ditutup.<br>";
         }
-    }
-
-    // ========== METHOD MENDAPATKAN KONEKSI (TANPA GETTER) ==========
-    // Langsung mengembalikan objek koneksi
-    public function ambilKoneksi() {
-        return $this->koneksi;
     }
 
     // ========== DESTRUKTOR ==========
@@ -170,9 +82,6 @@ class Koneksi {
     }
 }
 
-// ========== INSTANSIASI OBJEK KONEKSI (SINGLETON) ==========
+// ========== INSTANSIASI OBJEK KONEKSI ==========
 $koneksi = new Koneksi();
-
-// ========== TEST KONEKSI (OPSIONAL) ==========
-// $koneksi->testKoneksi();
 ?>

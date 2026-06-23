@@ -1,16 +1,16 @@
 <?php
 // models/Karyawan.php
-// ABSTRACT CLASS KARYAWAN
+// ABSTRACT CLASS KARYAWAN (INDUK)
 
 abstract class Karyawan {
     // ============================================
-    // 1. PROPERTI/ATRIBUT (PROTECTED - ENKAPSULASI)
+    // 1. PROPERTI (PUBLIC - AGAR BISA DIAKSES VIEW)
     // ============================================
-    protected $id_karyawan;
-    protected $nama_karyawan;
-    protected $departemen;
-    protected $hariKerjaMasuk;
-    protected $gajiDasarPerHari;
+    public $id_karyawan;
+    public $nama_karyawan;
+    public $departemen;
+    public $hariKerjaMasuk;
+    public $gajiDasarPerHari;
 
     // ============================================
     // 2. KONSTRUKTOR
@@ -27,17 +27,7 @@ abstract class Karyawan {
     // ============================================
     // 3. METHOD ABSTRAK (WAJIB DIIMPLEMENTASI ANAK)
     // ============================================
-    
-    /**
-     * Method abstrak untuk menghitung gaji bersih
-     * Wajib diimplementasikan oleh class anak
-     */
     abstract public function hitungGajiBersih();
-    
-    /**
-     * Method abstrak untuk menampilkan profil karyawan
-     * Wajib diimplementasikan oleh class anak
-     */
     abstract public function tampilkanProfilKaryawan();
 }
 ?>
